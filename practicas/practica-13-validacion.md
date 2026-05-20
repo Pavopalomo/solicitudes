@@ -61,7 +61,10 @@ console.log(result.error.flatten().fieldErrors)
 
 Responde:
 1. ¿Qué devuelve `result.error.flatten().fieldErrors`? ¿Cómo está estructurado?
+{ area_id: [ 'Invalid input: expected number, received string' ] }, esta estructurado como json
+
 2. ¿Por qué en un middleware de Express conviene usar `safeParse` en lugar de `parse`?
+porque safeParse no lanza excepciones, En lugar de romper la ejecución, devuelve un objeto
 
 ---
 
@@ -120,7 +123,10 @@ router.post('/', isAuthenticated, validate(createRequestSchema), create)
 
 Responde:
 1. ¿Por qué la función hace `req.body = result.data` antes de llamar a `next()`?
+Zod devuelve datos ya validados y transformados. 
+
 2. ¿Qué pasa si el body tiene un campo extra que no está en el schema, como `{ title: 'x', area_id: 1, hack: true }`?
+Zod por defecto elimina campos que no existen en el schema.
 
 > Pista para la segunda: prueba `schema.parse({ title: 'x', area_id: 1, hack: true })` en Node y observa qué devuelve `result`.
 
