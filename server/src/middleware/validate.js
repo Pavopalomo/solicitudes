@@ -3,7 +3,7 @@ const { ZodError } = require('zod')
 const validate = (schema) => (req, res, next) => {
   const result = schema.safeParse(req.body)
   if (!result.success) {
-    return res.status(400).json({ errors: result.error.flatten().fieldErrors })
+    next(result.err)
   }
   req.body = result.data
   next()
